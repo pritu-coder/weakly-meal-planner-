@@ -1,0 +1,46 @@
+*{ 
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+#container{
+    width:200px;
+    height:200px;
+    background-color:orange;
+    color:white;
+    position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    animation:move 6 s infinite;
+    animation-name:move;
+    animation-duration:3s;
+    animation-direction:alternate;
+    animation-iteration-count:5;
+    border-radius:50%;
+}
+#container:hover{
+    transform:scale(1.2);
+}
+
+@keyframes move{
+    0% {
+        background-color:black;
+        left:0px;
+        top:0px;
+    }
+    100%{
+        background-color:red;
+        left:200px;
+        top:200px;
+    }    
+    100% {
+        background-color:purple;
+        left:0px;
+        bottom:0px;
+
+    }
+}
+
+
+

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weekly Meal Planner</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7f5;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2e7d32;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .day {
+            background: white;
+            margin: 15px 0;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .day h2 {
+            color: #388e3c;
+            margin-top: 0;
+        }
+
+        .meal {
+            display: flex;
+            gap: 15px;
+            margin: 12px 0;
+            align-items: center;
+        }
+
+        .meal label {
+            width: 100px;
+            font-weight: bold;
+        }
+
+        input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+
+        button {
+            display: block;
+            margin: 25px auto;
+            padding: 12px 25px;
+            background: #2e7d32;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1b5e20;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>🥗 Weekly Meal Planner</h1>
+
+    <div id="mealPlan"></div>
+
+    <button onclick="saveMeals()">💾 Save Meal Plan</button>
+
+</div>
+
+<script>
+
+const days = [,
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday"
+];
+
+const defaultMeals = {
+    Monday: ["Palak + Poha", "Bhindi + Roti"],
+    Tuesday: ["Methi + Paratha", "Gobi + Roti"],
+    Wednesday: ["Carrot + Peas", "Lauki + Dal + Roti"],
+    Thursday: ["Capsicum + Besan Chilla", "Baingan + Roti"],
+    Friday: ["Tomato + Spinach", "Tori + Dal + Roti"],
+    Saturday: ["Mixed Vegetables + Upma", "Cabbage + Peas + Roti"],
+    Sunday: ["Aloo Gobi + Paratha", "Mixed Vegetable Curry + Roti"]
+};
+
+function createMealPlan() {
+
+    const mealPlan = document.getElementById("mealPlan");
+
+    days.forEach(day => {
+
+        const saved = JSON.parse(localStorage.getItem(day)) || defaultMeals[day];
+
+        const dayDiv = document.createElement("div");
+        dayDiv.className = "day";
+
+        dayDiv.innerHTML = `
+            <h2>${day}</h2>
+
+            <div class="meal">
+                <label>🌅 Morning</label>
+                <input id="${day}-morning" value="${saved[0]}">
+            </div>
+
+            <div class="meal">
+                <label>🌙 Night</label>
+                <input id="${day}-night" value="${saved[1]}">
+            </div>
+        `;
+
+        mealPlan.appendChild(dayDiv);
+    });
+}
+
+function saveMeals() {
+
+    days.forEach(day => {
+
+        const morning = document.getElementById(`${day}-morning`).value;
+        const night = document.getElementById(`${day}-night`).value;
+
+        localStorage.setItem(
+            day,
+            JSON.stringify([morning, night])
+        );
+    });
+
+    alert("✅ Your weekly meal plan has been saved!");
+}
+
+createMealPlan();
+
+</script>
+
+</body>
+</html>
